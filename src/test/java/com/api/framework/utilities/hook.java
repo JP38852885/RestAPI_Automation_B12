@@ -27,11 +27,13 @@ public class hook {
 
     @Before
     public void beforeScenario(){
+
         RequestSpecBuilder requestSpecBuilder = new RequestSpecBuilder().
                 setBaseUri(commonMethods.readProperties("config/Config.properties").getProperty("baseURI")).
                 setBasePath(commonMethods.readProperties("config/Config.properties").getProperty("basePath")).
-                setContentType("application/json;charset=utf-8").setPort(8083).log(LogDetail.ALL);
+                setContentType("application/json;charset=utf-8").addHeader("Authorization", "Bearer"+"4b3f5a3e-2fba-4a78-bf49-68fc136073c0").setPort(8083).log(LogDetail.ALL);
         RestAssured.requestSpecification = requestSpecBuilder.build();
+
     }
 
     @After

@@ -30,10 +30,9 @@ public class employeeStepDef {
     @Given("i enter employeeGender value as {string} digits with {string} request")
     public void iEnterEmployeeGenderValueAsDigitsWithRequest(String inputValue, String method) {
         Faker faker = new Faker();
-        String token="4b3f5a3e-2fba-4a78-bf49-68fc136073c0";
         if(method.equalsIgnoreCase("GET")){
-        GETResponse getResponse=given().header("Authorization", "Bearer"+token).expect().defaultParser(Parser.JSON).
-        when().get("http://localhost:8083/employee/find/by-id?id="+Integer.valueOf(inputValue)).as(GETResponse.class);
+        GETResponse getResponse=given().expect().defaultParser(Parser.JSON).
+        when().get("/find/by-id?id="+Integer.valueOf(inputValue)).as(GETResponse.class);
        System.out.print( getResponse.getEmployeeFirstName());
 
        testContext.set("fNmaefromGetRes",getResponse.getEmployeeFirstName() );
@@ -47,7 +46,7 @@ public class employeeStepDef {
                     employeePhone("1234567890").
                     isNewEmployee(true).build();
             testContext.set("EmpFirstName", employee.getEmployeeFirstName());
-            response = (Response) given().header("Authorization", "Bearer"+token).
+            response = (Response) given().
                     body(employee).
                     when().
                     post("/add").
